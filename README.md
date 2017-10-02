@@ -1,1 +1,1 @@
-###Aplicación para cambiar de ListView a GridView
+## Aplicación para cambiar de ListView a GridView
