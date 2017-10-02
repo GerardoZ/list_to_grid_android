@@ -21,12 +21,15 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private GridView gridView;
     List<Language> languages;
-    private int GRID_TO_LIST = 0;
-    private int LIST_TO_GRID = 1;
+    private final int GRID_TO_LIST = 0;
+    private final int LIST_TO_GRID = 1;
     private int counter = 0;
 
     LanguagesAdapter listAdapter;
     LanguagesAdapter gridAdapter;
+
+    MenuItem switchToListView;
+    MenuItem switchToGridView;
 
 
     @Override
@@ -46,12 +49,18 @@ public class MainActivity extends AppCompatActivity {
         gridView.setAdapter(gridAdapter);
 
 
+
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_bar_menu, menu);
+        switchToListView = (MenuItem) menu.findItem(R.id.switch_to_list);
+        switchToGridView = (MenuItem) menu.findItem(R.id.switch_to_grid);
+
+        switchToListView.setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -65,8 +74,10 @@ public class MainActivity extends AppCompatActivity {
                 this.gridAdapter.notifyDataSetChanged();
                 return true;
             case R.id.switch_to_grid:
+                switchTypeView(LIST_TO_GRID);
                 return true;
             case R.id.switch_to_list:
+                switchTypeView(GRID_TO_LIST);
                 return true;
 
             default:
@@ -83,6 +94,21 @@ public class MainActivity extends AppCompatActivity {
         this.languages.add(language2);
         this.languages.add(language3);
         this.languages.add(language4);
+    }
+
+    public void switchTypeView(int type){
+        if(type == LIST_TO_GRID){
+            this.gridView.setVisibility(View.VISIBLE);
+            this.listView.setVisibility(View.INVISIBLE);
+            this.switchToGridView.setVisible(false);
+            this.switchToListView.setVisible(true);
+        }else if(type == GRID_TO_LIST){
+            this.listView.setVisibility(View.VISIBLE);
+            this.gridView.setVisibility(View.INVISIBLE);
+            this.switchToListView.setVisible(false);
+            this.switchToGridView.setVisible(true);
+
+        }
     }
 }
 
