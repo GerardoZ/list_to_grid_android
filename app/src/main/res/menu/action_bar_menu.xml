@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_item"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Add Item"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/switch_to_grid"
+        android:icon="@mipmap/ic_grid"
+        android:title="Switch to grid"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/switch_to_list"
+        android:icon="@mipmap/ic_list"
+        android:title="Switch to list"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

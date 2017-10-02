@@ -2,6 +2,9 @@ package com.codecube.switch_list_to_grid;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -20,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
     List<Language> languages;
     private int GRID_TO_LIST = 0;
     private int LIST_TO_GRID = 1;
+    private int counter = 0;
+
+    LanguagesAdapter listAdapter;
+    LanguagesAdapter gridAdapter;
 
 
     @Override
@@ -32,13 +39,39 @@ public class MainActivity extends AppCompatActivity {
 
         setLanguages();
 
-        LanguagesAdapter listAdapter = new LanguagesAdapter(this, R.layout.list_item, languages);
-        LanguagesAdapter gridAdapter = new LanguagesAdapter(this, R.layout.grid_item, languages);
+        listAdapter = new LanguagesAdapter(this, R.layout.list_item, languages);
+        gridAdapter = new LanguagesAdapter(this, R.layout.grid_item, languages);
 
         listView.setAdapter(listAdapter);
         gridView.setAdapter(gridAdapter);
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.add_item:
+                Language newLan = new Language("New No " + ++counter, R.mipmap.ic_generic, "Unknown");
+                this.languages.add(newLan);
+                this.listAdapter.notifyDataSetChanged();
+                this.gridAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.switch_to_grid:
+                return true;
+            case R.id.switch_to_list:
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void setLanguages(){
