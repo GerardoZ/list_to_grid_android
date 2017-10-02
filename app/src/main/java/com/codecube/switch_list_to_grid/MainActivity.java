@@ -2,11 +2,13 @@ package com.codecube.switch_list_to_grid;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -49,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         gridView.setAdapter(gridAdapter);
 
 
-
+        registerForContextMenu(listView);
+        registerForContextMenu(gridView);
 
     }
 
@@ -83,6 +86,31 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        menu.setHeaderTitle(languages.get(info.position).getName());
+        inflater.inflate(R.menu.context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()){
+            case R.id.deleteItem:
+                this.languages.remove(info.position);
+                this.gridAdapter.notifyDataSetChanged();
+                this.listAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                super.onContextItemSelected(item);
+                return true;
+        }
+
     }
 
     public void setLanguages(){
